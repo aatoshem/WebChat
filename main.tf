@@ -18,8 +18,9 @@ data "aws_eks_cluster_auth" "cluster" {
 data "aws_availability_zones" "available" {
 }
 
-resource "aws_security_group" "worker_group_mgmt_one" {
-  name_prefix = "worker_group_mgmt_one"
+# AWS Security Group
+resource "aws_security_group" "worker_group_SG" {
+  name_prefix = "worker_group_SG"
   vpc_id      = module.vpc.vpc_id
 
   ingress {
@@ -33,21 +34,7 @@ resource "aws_security_group" "worker_group_mgmt_one" {
   }
 }
 
-resource "aws_security_group" "all_worker_mgmt" {
-  name_prefix = "all_worker_management"
-  vpc_id      = module.vpc.vpc_id
-
-  ingress {
-    from_port = 22
-    to_port   = 22
-    protocol  = "tcp"
-
-    cidr_blocks = [
-      "10.0.0.0/24",
-    ]
-  }
-}
-
+# AWS VPC module
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
    version = "2.77.0"
@@ -72,6 +59,7 @@ module "vpc" {
   }
 }
 
+# AWS EKS module
 module "eks" {
   source       = "terraform-aws-modules/eks/aws"
   cluster_name    = var.cluster_name
@@ -87,9 +75,9 @@ module "eks" {
     {
       name                          = "worker-group-1"
       instance_type                 = "t2.small"
-      additional_userdata           = "echo Server is UP!!!"
+      additional_userdata           = "echo Server started"
       asg_desired_capacity          = 1
-      additional_security_group_ids = [aws_security_group.worker_group_mgmt_one.id]
+      additional_security_group_ids = [aws_security_group.worker_group_SG.id]
     },
   ]
 
@@ -100,7 +88,7 @@ module "eks" {
 }
 
 
-
+# Kubernetes Provider
 provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
@@ -109,6 +97,7 @@ provider "kubernetes" {
   version                = "~> 1.11"
 }
 
+# Kubernetes Deployment
 resource "kubernetes_deployment" "deploy-jenkins" {
   metadata {
     name = "deploy-jenkins"
@@ -154,6 +143,7 @@ resource "kubernetes_deployment" "deploy-jenkins" {
   }
 }
 
+# Kubernetes Service
 resource "kubernetes_service" "service-jenkins" {
   metadata {
     name = "service-jenkins"
