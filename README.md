@@ -19,7 +19,7 @@
 
   4. Configure config-map-auth-aws
   ```
-  terraform output config-map-aws-auth > config-map-aws-auth.yaml
+  terraform output config-map-auth > config-map-auth.yaml
 
   kubectl apply -f config-map-aws-auth.yaml
   ```

@@ -17,7 +17,7 @@ locals {
     CA_CERTIFICATE_DIRECTORY=/etc/kubernetes/pki
     CA_CERTIFICATE_FILE_PATH=$CA_CERTIFICATE_DIRECTORY/ca.crt
     mkdir -p $CA_CERTIFICATE_DIRECTORY
-    echo "${aws_eks_cluster.demo-cluster.certificate_authority.0.data}" | base64 -d > $CA_CERTIFICATE_FILE_PATH
+    echo "${aws_eks_cluster.demo.certificate_authority.0.data}" | base64 -d > $CA_CERTIFICATE_FILE_PATH
     INTERNAL_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
     sed -i s,MASTER_ENDPOINT,${aws_eks_cluster.demo.endpoint},g /var/lib/kubelet/kubeconfig
     sed -i s,CLUSTER_NAME,${var.cluster-name},g /var/lib/kubelet/kubeconfig
@@ -51,19 +51,19 @@ resource "aws_launch_configuration" "demo" {
 
 resource "aws_autoscaling_group" "demo" {
     desired_capacity = 2
-    launch_configuration = "${aws_launch_configuration_demo.id}"
+    launch_configuration = "${aws_launch_configuration.demo.id}"
     max_size = 2
     min_size = 1
     name = "terraform-eks-demo"
-    vpc_zone_identifier = ["${module.vpc.public.subnets}"]
+    vpc_zone_identifier = ["${module.vpc.public_subnets[0]}", "${module.vpc.public_subnets[1]}", "${module.vpc.public_subnets[2]}"]
 
-    tags {
+    tag {
         key = "Name"
         value = "terraform-eks-cluster-autoscaling"
         propagate_at_launch = true
     }
 
-    tags {
+    tag {
         key = "kubernetes.io/cluster/${var.cluster-name}"
          value = "owned"
         propagate_at_launch = true
