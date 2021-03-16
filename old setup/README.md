@@ -17,7 +17,7 @@
   terraform output kubeconfig > ~/.kube/config
   ```
 
-  4. Configure config-map-auth-aws
+  4. Configure config-map-auth-aws (To provision worker nodes)
   ```
   terraform output config-map-auth > config-map-auth.yaml
 
