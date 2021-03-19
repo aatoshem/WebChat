@@ -12,9 +12,7 @@ sudo mv kubectl /usr/local/bin
 
 ## Download the aws-iam-authenticator
 ```
-wget https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v0.3.0/heptio-authenticator-aws_0.3.0_linux_amd64
-chmod +x heptio-authenticator-aws_0.3.0_linux_amd64
-sudo mv heptio-authenticator-aws_0.3.0_linux_amd64 /usr/local/bin/heptio-authenticator-aws
+https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
 ```
 
 ## Modify providers.tf
@@ -32,6 +30,9 @@ terraform apply
 ## Configure kubectl
 ```
 terraform output kubeconfig # save output in ~/.kube/config
+
+OR 
+
 aws eks --region <region> update-kubeconfig --name terraform-eks-demo
 ```
 
