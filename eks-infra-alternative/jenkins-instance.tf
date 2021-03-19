@@ -66,7 +66,7 @@ output "jenkins_ip_address" {
 }
 
 # Creates an Application Load Balancer for Jenkins
-resource "aws_lb" "jenkins-lb" {
+/* resource "aws_lb" "jenkins-lb" {
   name               = "test-lb-tf"
   internal           = false
   load_balancer_type = "application"
@@ -91,7 +91,7 @@ resource "aws_lb_target_group_attachment" "test" {
   target_group_arn = aws_lb_target_group.test.arn
   target_id        = aws_instance.jenkins-instance.id
   port             = 80
-}
+} */
 
 #Creates a subnet for Jenkins
 resource "aws_subnet" "public-subnet-2" {
