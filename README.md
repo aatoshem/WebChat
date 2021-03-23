@@ -52,24 +52,3 @@ Make sure all the resources created by Kubernetes are removed (LoadBalancers, Se
 ```
 terraform destroy
 ```
-
-## To Install Jenkins using Helm
-
-```
-$ helm repo add jenkinsci https://charts.jenkins.io
-$ helm repo update
-
-$ helm search repo jenkinsci
-
-
-1. Get your 'admin' user password by running:
-  kubectl exec --namespace jenkins -it svc/jenkins -c jenkins -- /bin/cat /run/secrets/chart-admin-password && echo
-2. Get the Jenkins URL to visit by running these commands in the same shell:
-  echo http://127.0.0.1:8080
-  kubectl --namespace jenkins port-forward svc/jenkins 8080:8080
-
-3. Login with the password from step 1 and the username: admin
-4. Configure security realm and authorization strategy
-5. Use Jenkins Configuration as Code by specifying configScripts in your values.yaml file, see documentation: http:///configuration-as-code and examples: https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos
-
-```
