@@ -1,45 +1,28 @@
 package com.leidos.webchat.model;
 
 
-import java.time.ZonedDateTime;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
+import java.util.Set;
+
 @Entity
-@Table(name="CHAT")
+@Table
 @Getter @Setter
 @NoArgsConstructor
-public class Chat {
+public class Chat  extends AuditInfo {
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private Long chatId;
 	
 	@OneToMany(mappedBy="chat")
-	private Set<ChatItem> chatItems;
+	private Set<ChatMessage> chatItems;
 	
 	@ManyToOne
-	@JoinColumn(name="agent_id", nullable=false)
-	private Agent agent;
-
-	@Column(name="CREATED_AT")
-	private ZonedDateTime createdAt;
-	
-	@Column(name="UPDATED_AT")
-	private ZonedDateTime updatedAt;
-	
+	@JoinColumn(name="customer_id", nullable=false)
+	private Customer customer;
 	
 }
