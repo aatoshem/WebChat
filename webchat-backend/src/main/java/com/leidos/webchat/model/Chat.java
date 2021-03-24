@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -30,9 +31,10 @@ public class Chat {
 	@OneToMany(mappedBy="chat")
 	private Set<ChatItem> chatItems;
 	
-	@JoinColumn(name="USER_ID", nullable=false)
-	private Agent user;
-	
+	@ManyToOne
+	@JoinColumn(name="agent_id", nullable=false)
+	private Agent agent;
+
 	@Column(name="CREATED_AT")
 	private ZonedDateTime createdAt;
 	

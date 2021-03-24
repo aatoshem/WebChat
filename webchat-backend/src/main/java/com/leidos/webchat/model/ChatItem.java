@@ -32,8 +32,8 @@ public class ChatItem {
 	@Column(name="REQUEST_IND")
 	private String requestInd;
 	
-	@Column(name="TEXT")
-	private String text;
+	@Column(name="TEXT_MSG")
+	private String msg;
 	
 	@Column(name="AUTO_MESSAGE_ID")
 	private String autoMsg_id;
