@@ -21,5 +21,7 @@ public class Customer {
     @Column
     private String alias;
 
-
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
 }

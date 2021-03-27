@@ -34,4 +34,35 @@ public class ChatMessage extends AuditInfo {
 	@JoinColumn(name="CHAT_ID", nullable=false)
 	private Chat chat;
 
+	public Long getChatMessageId() {
+		return chatMessageId;
+	}
+
+	public void setChatMessageId(Long chatMessageId) {
+		this.chatMessageId = chatMessageId;
+	}
+
+	public String getRequestInd() {
+		return requestInd;
+	}
+
+	public void setRequestInd(String requestInd) {
+		this.requestInd = requestInd;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public int getAutoMessageId() {
+		return autoMessageId;
+	}
+
+	public void setAutoMessageId(int autoMessageId) {
+		this.autoMessageId = autoMessageId;
+	}
 }
