@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Agent Page</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="/main.css" rel="stylesheet">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="/agent.js"></script>
+</head>
+<body>
+    <table class="table">
+        <head>
+            <tr>
+                <th>Time</th>
+                <th>Chat Id</th>
+                <th>User name</th>
+            </tr>
+        </head>
+        <tbody id="chatList">
+
+        </tbody>
+    </table>
+
+
+    <div id="agentDialog" style="display:none" title="Chat">
+        <input type="text" id="messageToCustomer">
+        <input type="button" onclick="sendMessageToCustomer()" value="Post Message">
+
+        <table class="table" id="chatMsgTable">
+        </table>
+    </div>
+</body>
+</html>
