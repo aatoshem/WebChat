@@ -1,6 +1,6 @@
 var stompClient = null;
 var chatTopicSave;
-
+var baseUrl = null;
 //function connectAgent(chatId) {
 //    var socket = new SockJS('/gs-guide-websocket');
 //    stompClient = Stomp.over(socket);
@@ -11,6 +11,7 @@ var chatTopicSave;
 //    });
 //}
 //
+
 
 function addCustomerMessage(message){
 
@@ -38,7 +39,7 @@ function connectAgent() {
 
 function grab(id){
     $.ajax({
-                url: "http://localhost:8080/grab/"+id
+                url: window.location.origin+"/grab/"+id
             }).then(function(data) {
                $("#agentDialog").dialog({
                                             width: 500,
@@ -69,7 +70,7 @@ $(function () {
 
      connectAgent();
      $.ajax({
-            url: "http://localhost:8080/customerRequests"
+            url: window.location.origin+"/customerRequests"
         }).then(function(data) {
             for (let i=0; i<data.length; i++){
                 addData(data[i]);

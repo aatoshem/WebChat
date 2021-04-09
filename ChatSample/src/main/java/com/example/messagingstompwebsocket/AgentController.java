@@ -4,6 +4,7 @@ import com.example.messagingstompwebsocket.service.chat.ChatMessage;
 import com.example.messagingstompwebsocket.service.chat.ChatRequest;
 import com.example.messagingstompwebsocket.service.chat.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,10 +12,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class AgentContoller {
+public class AgentController {
+
+    @Value("${base.url:localhost}")
+    private String baseUrl;
 
     @Autowired
     private ChatService chatService;
+
+    @GetMapping (value="/baseUrl")
+    public String getBaseUrl(){
+        return baseUrl;
+    }
 
     @GetMapping(value = "/sendMessageToAgent/{chatId}{message}")
     public void sendMessageToAgent(@PathVariable("chatId") String chatId,
