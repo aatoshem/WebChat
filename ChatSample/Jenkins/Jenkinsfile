@@ -4,6 +4,10 @@ agent any
         stage ('Build') { 
             steps{
                 echo "Build"
+                'git checkout Webchat_with_sample'
+                'git pull'
+                'cd Webchat_with_sample'
+                './gradlew clean build'
             }
         }
         stage ('Test') { 
