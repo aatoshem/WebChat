@@ -6,8 +6,9 @@ agent any
                 echo "Build"
                 sh 'git checkout Webchat_with_sample'
                 sh 'git pull'
-                sh 'cd Webchat_with_sample'
-                sh './gradlew clean build'
+                dir("Webchat_with_sample"){
+                    sh './gradlew clean build'
+                }
             }
         }
         stage ('Test') { 
