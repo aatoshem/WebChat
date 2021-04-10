@@ -12,13 +12,16 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class ChatController {
 
-    @Autowired
     private ChatService chatService;
+
+    @Autowired
+    public ChatController(ChatService chatService) {
+        this.chatService = chatService;
+    }
 
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/public")
     public WebChatMessage sendMessage(@Payload WebChatMessage webChatMessage) {
-        //call chat service
         chatService.saveWebChatMessage(webChatMessage);
         return webChatMessage;
     }
@@ -30,7 +33,8 @@ public class ChatController {
         // Add username in web socket session
         headerAccessor.getSessionAttributes().put("username", webChatMessage.getSender());
         //Create Chat for username
-//        chatService.CreateChat(webChatMessage);
+        chatService.CreateChat(webChatMessage);
+
         return webChatMessage;
     }
 }

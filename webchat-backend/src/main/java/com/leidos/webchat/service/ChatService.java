@@ -10,6 +10,7 @@ import com.leidos.webchat.websocket.WebChatMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -24,6 +25,7 @@ public class ChatService {
     @Autowired
     private CustomerRepo customerRepo;
 
+    @Transactional
     public void CreateChat(WebChatMessage c) {
         Customer customer = new Customer();
         customer.setAlias(c.getSender());
@@ -37,6 +39,7 @@ public class ChatService {
         c.setChatId(chat.getChatId());
     }
 
+    @Transactional
     public void saveWebChatMessage(WebChatMessage wcMessage){
         Optional<Chat> chat = chatRepo.findById(wcMessage.getChatId());
 
@@ -45,11 +48,9 @@ public class ChatService {
         chatMessage.setRequestInd("C");
         chatMessage.setAutoMessageId(0);
 
-//        chatMessageRepo.save(chatMessage);
-
         chat.ifPresent(c -> {
-            c.getChatItems().add(chatMessage);
-            chatRepo.save(c);
+            chatMessage.setChat(c);
+            chatMessageRepo.save(chatMessage);
         });
     }
 
