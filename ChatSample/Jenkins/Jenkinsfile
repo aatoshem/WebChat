@@ -6,7 +6,7 @@ agent any
                 echo "Build"
                 sh 'git checkout Webchat_with_sample'
                 sh 'git pull'
-                dir("Webchat_with_sample"){
+                dir("ChatSample"){
                     sh 'pwd;ls -l'
                     sh './gradlew clean build'
                 }
