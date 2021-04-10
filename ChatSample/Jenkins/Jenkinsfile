@@ -7,7 +7,7 @@ agent any
                 sh 'git checkout Webchat_with_sample'
                 sh 'git pull'
                 dir("ChatSample"){
-                    sh 'pwd;ls -l'
+                    sh 'chmod +x ./gradlew'
                     sh './gradlew clean build'
                 }
             }
