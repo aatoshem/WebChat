@@ -1,15 +1,12 @@
 package com.leidos.webchat.model;
 
 
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table
-@Getter @Setter
 @NoArgsConstructor
 public class ChatMessage extends AuditInfo {
 	
@@ -27,7 +24,7 @@ public class ChatMessage extends AuditInfo {
 	private int autoMessageId;
 
 	@ManyToOne
-	@JoinColumn(name = "agent_id", nullable = false)
+	@JoinColumn(name = "agent_id")
 	private Agent agent;
 
 	@ManyToOne
@@ -64,5 +61,21 @@ public class ChatMessage extends AuditInfo {
 
 	public void setAutoMessageId(int autoMessageId) {
 		this.autoMessageId = autoMessageId;
+	}
+
+	public Agent getAgent() {
+		return agent;
+	}
+
+	public void setAgent(Agent agent) {
+		this.agent = agent;
+	}
+
+	public Chat getChat() {
+		return chat;
+	}
+
+	public void setChat(Chat chat) {
+		this.chat = chat;
 	}
 }

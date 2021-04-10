@@ -49,7 +49,7 @@ CREATE TABLE chat_message (
     chat_message_id int PRIMARY KEY,
     request_ind CHAR,
     message VARCHAR(250),
-    agent_id int NOT NULL,
+    agent_id int,
     chat_id int NOT NULL,
     auto_message_id int,
     created_by VARCHAR(250),
