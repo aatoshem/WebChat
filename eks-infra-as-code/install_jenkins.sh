@@ -33,4 +33,3 @@ sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
 sudo yum update
 sudo yum install jenkins -y
 sudo systemctl daemon-reload
-sudo yum install git -y
