@@ -1,0 +1,42 @@
+pipeline { 
+agent any 
+    stages { 
+        stage ('Build') { 
+            steps{
+                echo "Build"
+                sh 'git checkout Webchat_with_sample'
+                sh 'git pull'
+                dir("ChatSample"){
+                    sh 'chmod +x ./gradlew'
+                    sh './gradlew clean build -x test'
+                }
+            }
+        }
+        stage ('Test') { 
+            steps{
+                echo "Test"
+            }
+        }
+        stage ('QA') { 
+            steps{
+                echo "QA"
+            }
+        }
+        stage ('Deploy') { 
+            steps{
+                echo "Deploy"
+                 dir("ChatSample"){
+                    sh 'docker build --tag the-service:1.0 .'
+                    sh 'docker stop service-container || true && docker rm service-container || true'
+                    sh 'docker run -d -p18080:8080 --name service-container the-service:1.0'
+                }
+            }
+        }
+        stage ('Monitor') { 
+            steps{
+                echo "Monitor"
+            }
+        }
+ 
+    }           
+ }
