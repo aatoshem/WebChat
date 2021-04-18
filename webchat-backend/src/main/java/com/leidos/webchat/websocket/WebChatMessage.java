@@ -4,7 +4,7 @@ public class WebChatMessage {
     private MessageType type;
     private String content;
     private String sender;
-    private Long chatId;
+    private String chatId;
 
     public WebChatMessage() {
     }
@@ -33,11 +33,11 @@ public class WebChatMessage {
         this.sender = sender;
     }
 
-    public Long getChatId() {
+    public String getChatId() {
         return chatId;
     }
 
-    public void setChatId(Long chatId) {
+    public void setChatId(String chatId) {
         this.chatId = chatId;
     }
 }

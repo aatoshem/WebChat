@@ -1,14 +1,11 @@
 package com.leidos.webchat.model;
 
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity @Table
-@Getter @Setter
 @NoArgsConstructor
 public class Agent extends AuditInfo {
     @Id
@@ -27,4 +24,43 @@ public class Agent extends AuditInfo {
     @OneToMany(mappedBy = "agent")
     private List<AgentRole> agentRole;
 
+    public Long getAgentId() {
+        return agentId;
+    }
+
+    public void setAgentId(Long agentId) {
+        this.agentId = agentId;
+    }
+
+    public String getAgentName() {
+        return agentName;
+    }
+
+    public void setAgentName(String agentName) {
+        this.agentName = agentName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public List<AgentRole> getAgentRole() {
+        return agentRole;
+    }
+
+    public void setAgentRole(List<AgentRole> agentRole) {
+        this.agentRole = agentRole;
+    }
 }
