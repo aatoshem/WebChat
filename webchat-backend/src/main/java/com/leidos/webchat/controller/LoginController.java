@@ -31,4 +31,5 @@ public class LoginController {
         agentService.saveAgentOnFirstLogin(oauth2User);
         return "agent";
     }
+
 }
