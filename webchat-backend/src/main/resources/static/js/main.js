@@ -38,10 +38,7 @@ function onConnected() {
     stompClient.subscribe('/topic/public', onMessageReceived);
 
     // Tell your username to the server
-    stompClient.send("/app/chat.addUser",
-        {},
-        JSON.stringify({sender: username, type: 'JOIN'})
-    )
+    stompClient.send("/app/chat/addUser", {}, JSON.stringify({sender: username, type: 'JOIN'}));
 
     connectingElement.classList.add('hidden');
 }
@@ -62,7 +59,7 @@ function sendMessage(event) {
             type: 'CHAT',
             chatId: chatId
         };
-        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+        stompClient.send("/app/chat/sendMessage", {}, JSON.stringify(chatMessage));
         messageInput.value = '';
     }
     event.preventDefault();
@@ -76,8 +73,21 @@ function onMessageReceived(payload) {
 
     if(message.type === 'JOIN') {
         messageElement.classList.add('event-message');
-        message.content = message.sender + ' joined!';
+        message.content = message.sender + ' joined!'
+        var textElement = document.createElement('p');
+        var messageText = document.createTextNode('Save this id to reconnect: ' + message.chatId);
+        textElement.appendChild(messageText);
+        messageElement.appendChild(textElement);
+        messageArea.appendChild(messageElement);
         chatId = message.chatId;
+        // only if customer is connecting for the first time
+        stompClient.disconnect();
+        var socket = new SockJS('/wsChat');
+        stompClient = Stomp.over(socket);
+        var dest = '/topic/private/chat/' + chatId;
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe(dest, onMessageReceived);
+        }, onError);
     } else if (message.type === 'LEAVE') {
         messageElement.classList.add('event-message');
         message.content = message.sender + ' left!';

@@ -13,10 +13,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/", "/login**", "/css/**", "/js/**", "/wsChat/**")
                     .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .oauth2Login();
+                // all other requests
+                .anyRequest().authenticated()
+                // Logout and redirect to the root page
+                .and().logout().logoutSuccessUrl("/")
+                // enable Oauth2 Login
+                .and().oauth2Login();
     }
 
 }

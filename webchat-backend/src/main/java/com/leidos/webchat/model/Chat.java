@@ -1,32 +1,37 @@
 package com.leidos.webchat.model;
 
 
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table
-@NoArgsConstructor
 public class Chat extends AuditInfo {
 	
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
-	private Long chatId;
-	
+	@Column
+	private String chatId;
+
+	@Column
+	@Enumerated(EnumType.ORDINAL)
+	private ChatStatusEnum chatStatus;
+
 	@OneToMany(mappedBy="chat")
-	private Set<ChatMessage> chatItems;
+	private Set<ChatMessage> chatMessages;
 	
 	@ManyToOne
 	@JoinColumn(name="customer_id", nullable=false)
 	private Customer customer;
 
-	public Long getChatId() {
+	public Chat() {
+		this.chatId = UUID.randomUUID().toString();
+	}
+	public String getChatId() {
 		return chatId;
 	}
 
-	public void setChatId(Long chatId) {
+	public void setChatId(String chatId) {
 		this.chatId = chatId;
 	}
 
@@ -38,11 +43,19 @@ public class Chat extends AuditInfo {
 		this.customer = customer;
 	}
 
-	public Set<ChatMessage> getChatItems() {
-		return chatItems;
+	public Set<ChatMessage> getChatMessages() {
+		return chatMessages;
 	}
 
-	public void setChatItems(Set<ChatMessage> chatItems) {
-		this.chatItems = chatItems;
+	public void setChatMessages(Set<ChatMessage> chatMessages) {
+		this.chatMessages = chatMessages;
+	}
+
+	public ChatStatusEnum getChatStatus() {
+		return chatStatus;
+	}
+
+	public void setChatStatus(ChatStatusEnum chatStatus) {
+		this.chatStatus = chatStatus;
 	}
 }

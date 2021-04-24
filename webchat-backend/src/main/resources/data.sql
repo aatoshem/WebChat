@@ -36,13 +36,14 @@ CREATE TABLE agent_role (
 );
 
 CREATE TABLE chat (
-    chat_id int PRIMARY KEY,
+    chat_id VARCHAR(255) PRIMARY KEY,
     customer_id int NOT NULL,
+    chat_status VARCHAR(250),
     created_by VARCHAR(250),
     created_at VARCHAR(250),
     updated_by VARCHAR(250),
     updated_at VARCHAR(250),
-    FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
+    FOREIGN KEY (customer_id) REFERENCES customer (customer_id)
 );
 
 CREATE TABLE chat_message (
@@ -50,7 +51,7 @@ CREATE TABLE chat_message (
     request_ind CHAR,
     message VARCHAR(250),
     agent_id int,
-    chat_id int NOT NULL,
+    chat_id VARCHAR(255) NOT NULL,
     auto_message_id int,
     created_by VARCHAR(250),
     created_at VARCHAR(250),
@@ -59,3 +60,6 @@ CREATE TABLE chat_message (
     FOREIGN KEY (agent_id) REFERENCES agent(agent_id),
     FOREIGN KEY (chat_id) REFERENCES chat(chat_id)
 );
+
+INSERT INTO role (role_id, role_desc) VALUES (1, 'Supervisor');
+INSERT INTO role (role_id, role_desc) VALUES (2, 'Agent');
